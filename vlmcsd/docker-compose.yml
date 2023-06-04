@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  vlmcsd:
+    image: vlmcsd:1113-2020-03-28-Hotbird64-x64-musl-static
+    build: .
+    container_name: vlmcsd
+    ports:
+      - "1688:1688"
+    restart: always
+    networks:
+      # bridge_network:
+      #     ipv4_address: 172.18.156.88
+      #     aliases: 
+      #       - KMS
+      macvlan_network:
+          ipv4_address: 172.16.156.88
+          aliases: 
+            - Docker-KMS
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+        reservations:
+          memory: 16M
+
+networks:
+  bridge_network:
+    external: true
+  macvlan_network:
+    external: true
