@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+  postgresql:
+    image: postgres:15.3
+    container_name: postgresql
+    volumes:
+      - "/volume2/docker/data/postgresql/postgresql-data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "root"
+    restart: unless-stopped
+    networks:
+      macvlan_ovs_eth0:
+          ipv4_address: 172.16.156.101
+          aliases: 
+            - Docker-PostgreSQL
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 4096M
+    #     reservations:
+    #       memory: 3072M
+
+networks:
+  macvlan_ovs_eth0:
+    external: true
