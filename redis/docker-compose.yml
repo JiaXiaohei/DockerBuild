@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  nexus:
+    image: redis:7.0.11
+    container_name: redis
+    volumes:
+      - "/volume2/docker/data/redis/redis-data:/data"
+      - "/volume2/docker/data/redis/redis-etc/redis.conf:/etc/redis/redis.conf"
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    networks:
+      macvlan_ovs_eth0:
+          ipv4_address: 172.16.156.102
+          aliases: 
+            - Docker-Redis
+    command: redis-server /etc/redis/redis.conf
+networks:
+  macvlan_ovs_eth0:
+    external: true
